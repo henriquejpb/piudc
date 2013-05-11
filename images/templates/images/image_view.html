@@ -34,7 +34,7 @@
                 <div class="btn-group">
                     <a href="{% url 'upload' image_data.id %}" class="btn btn-success">
                         <i class="icon-upload icon-white"></i>
-                        Guardar y Subir
+                        Subir
                     </a>
                     <a href="{% url 'delete' image_data.id %}" class="btn btn-danger">
                         <i class="icon-remove icon-white"></i>
@@ -62,8 +62,8 @@
                         <li><a href="{% url 'filter' image_data.id %}?filter_type=brilhoMultiplicativoR" data-filter-type="brilhoMultiplicativoR" class="required-param">Brillo Multiplicativo Rojo</a></li>
                         <li><a href="{% url 'filter' image_data.id %}?filter_type=brilhoMultiplicativoB" data-filter-type="brilhoMultiplicativoB" class="required-param">Brillo Multiplicativo Azul</a></li>
                         <li><a href="{% url 'filter' image_data.id %}?filter_type=brilhoMultiplicativoG" data-filter-type="brilhoMultiplicativoG" class="required-param">Brillo Multiplicativo Verde</a></li>
-                        <li><a href="{% url 'filter' image_data.id %}?filter_type=media" class="required-param">Media</a></li>
-                        <li><a href="{% url 'filter' image_data.id %}?filter_type=mediana" class="required-param">Mediana</a></li>
+                        <li><a href="{% url 'filter' image_data.id %}?filter_type=media" class="required-param" data-filter-type="media">Media</a></li>
+                        <li><a href="{% url 'filter' image_data.id %}?filter_type=mediana" class="required-param" data-filter-type="mediana">Mediana</a></li>
                         <li><a href="{% url 'filter' image_data.id %}?filter_type=negativo">Negativo</a></li>
                         <li><a href="{% url 'filter' image_data.id %}?filter_type=negativoBanda" data-filter-type="negativoBanda" class="required-param">Banda Negativa</a></li>
                     </ul>
@@ -71,7 +71,8 @@
             </div>
             <figure id="image-info" class="thumbnail">
                 <img src="{{ image_data.pathname.url }}">
-                <form id="image-data-form" action="{% url 'update' image_data.id %}" class="form-horizontal" method="post">{% csrf_token %}
+                <form id="image-data-form" action="{% url 'update' image_data.id %}" class="form-horizontal" method="post">
+                    {% csrf_token %}
                     <fieldset>
                         <legend>Informaciones de la imagen</legend>
                         <div class="control-group">
@@ -90,8 +91,8 @@
                         </div>
                     </fieldset>
                     <div class="form-actions">
-                        <button type="submit" class="btn btn-primary">Salvar</button>
-                        <button type="reset" class="btn" data-dismiss="modal" aria-hidden="true">Resetar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                        <button type="reset" class="btn" data-dismiss="modal" aria-hidden="true">Restaurar</button>
                     </div>
                 </form>
             </figure>

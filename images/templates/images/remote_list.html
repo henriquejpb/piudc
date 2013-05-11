@@ -30,3 +30,10 @@
     {{image_data.title}}
 </figcaption>
 {% endblock %}
+
+{% block empty_list %}
+<p class="alert alert-warning">
+    <span class="icon icon-info-sign"></span>
+    Su repositorio remoto está vacío. Acceda al <a href="{% url 'local_list' %}">repositorio local</a> para subir imágenes.
+</p>
+{% endblock %}

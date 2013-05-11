@@ -1,0 +1,38 @@
+{% extends 'images/base_layout.html' %}
+{% load staticfiles %}
+{% block specific_head %}
+<script type="text/javascript" src="{% static 'images/js/jquery.equalizeHeights.js' %}"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('.with-tooltip').tooltip();
+    });
+    $(window).load(function(){
+        $('.equal-heights').equalizeHeights();
+    });
+</script>
+{% endblock %}
+
+{% block body_content %}
+<div class="container">
+    {% if image_list|length != 0 %}
+    {% block pre_content %}{% endblock %}
+    <ul class="thumbnails col3">
+        {% for image_data in image_list %}
+        <li class="span4">
+            <figure class="image-container thumbnail equal-heights">
+                <div class="btn-toolbar">
+                    <div class="btn-group">
+                        {% block action_buttons %}{% endblock %}
+                    </div>
+                </div>
+                {% block image_representation %}{% endblock %}
+            </figure>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% block post_content %}{% endblock %}
+{% else %}
+{% block empty_list %}{% endblock %}
+{% endif %}
+{% endblock %}

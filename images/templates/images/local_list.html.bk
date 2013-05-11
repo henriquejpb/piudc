@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>
+            Práctica final de Programación Integrativa - Lista Local
+        </title>
+        {% include 'images/partials/head.html' %}
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $('.with-popover').popover();
+                
+                (function($, context){
+                    var maxHeight=0;
+                    $('.equal-height', context).each(function(){
+                        if($(this).height() > maxHeight) {
+                            maxHeight=$(this).height();
+                        }
+                    });
+
+                    $('.equal-height').height(maxHeight);
+                })(jQuery, jQuery('.thumbnails'));
+            });
+        </script>
+    </head>
+    <body>
+        {% include 'images/partials/main_nav.html' %}
+        <div class="container">
+            {% if image_list|length != 0 %}
+            <div class="btn-toolbar">
+                <div class="btn-group">
+                    <a href="javascript:void(0);" id="sync-all-button" class="btn with-popover" data-title="Atención" data-content="Esta acción enviará todas las imágenes de su repositorio local para el remoto y luego las eliminará del local." data-trigger="click" data-placement="bottom" data-container="body">
+                        <i class="icon-upload"></i>
+                        Sincronizar Todo
+                    </a>
+                </div>
+            </div>
+            <ul class="thumbnails col3">
+                {% for image_data in image_list %}
+                <li class="span4">
+                    <figure class="image-container thumbnail equal-height">
+                        <div class="btn-toolbar">
+                            <div class="btn-group">
+                                <a href="{% url 'upload' image_data.id %}" class="btn btn-small btn-success" title="Subir imagen">
+                                    <span class="icon-upload icon-white"></span>
+                                </a>
+                                <a href="{% url 'delete' image_data.id %}" class="btn btn-small btn-danger" title="Eliminar imagen">
+                                    <span class="icon-remove icon-white"></span>
+                                </a>
+                            </div>
+                        </div>
+                        <a href="{% url 'image_view' image_data.id %}">
+                            <img src="{{ image_data.pathname.url }}" alt="{{ image_data.title }}">
+                        </a>
+                        <figcaption class="text-center">
+                            {{image_data.description}}
+                        </figcaption>
+                    </figure>
+                </li>
+                {% endfor %}
+            </div>
+            {% if image_list.has_other_pages %}
+            <div class="pagination pagination-centered">
+                <ul>
+                    {% if image_list.has_previous %}
+                    <li class=""><a href="{% url 'local_list' %}?page={{image_list.previous_page_number}}">&laquo;</a></li>
+                    {% endif %}
+                    {% for p in image_list.paginator.page_range %}
+                    {% if p != image_list.number %}
+                    <li class=""><a href="{% url 'local_list' %}?page={{p}}">{{p}}</a></li>
+                    {% else %}
+                    <li class="disabled active"><span>{{p}}</span></li>
+                    {% endif %}
+                    {% endfor %}
+                    {% if image_list.has_next %}
+                    <li class=""><a href="{% url 'local_list' %}?page={{image_list.next_page_number}}">&raquo;</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+            {% endif %}
+            {% else %}
+            <p class="alert alert-warning">
+                <span class="icon icon-info-sign"></span>
+                Su repositorio local está vacío. Acceda al <a href="{% url 'remote_list' %}">repositorio remoto</a> para bajar imágenes.
+            </p>
+            {% endif %}
+        </div>
+    </body>
+</html>

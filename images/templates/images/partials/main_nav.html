@@ -1,0 +1,19 @@
+<div class="navbar navbar-inverse navbar-fixed-top navbar-fluid">
+    <div class="navbar-inner">
+        <div class="container">
+            <button type="button" class="btn btn-navbar" data-toggle="collapse" 
+                data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="brand" href="#">PI-UDC</a>
+            <div class="nav-collapse collapse">
+                <ul class="nav">
+                    <li class="{{menu_local}}"><a class="" href="{% url 'local_list' %}">Local</a></li>
+                    <li class="{{menu_remote}}"><a class="" href="{% url 'remote_list' %}">Remoto</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

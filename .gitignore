@@ -1,0 +1,7 @@
+*.pyc
+*.jar
+/lib/
+/media
+/static/
+/db/
+*~

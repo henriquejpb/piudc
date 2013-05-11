@@ -1,0 +1,32 @@
+{% extends 'images/base_list.html' %}
+
+{% block title %}Lista de Imágenes Remotas{% endblock %}
+
+{% block nav_include %}
+{% include 'images/partials/main_nav.html' with menu_local='' menu_remote='active' %}
+{% endblock %}
+
+{% block pre_content %}
+<form id="remote-search-form" method="get" class="form-inline" action="{% url 'remote_list' %}">
+    <fieldset class="text-center">
+        <input type="text" class="input-xxlarge" id="remote-search-field" name="q" placeholder="Busque imágenes por su título o descripción...">
+        <button type="submit" class="btn btn-primary">Buscar</button>
+    </fieldset>
+</form>
+{% endblock %}
+
+{% block action_buttons %}
+<a href="{% url 'download' image_data.id %}" class="btn btn-small btn-primary" title="Bajar imagen remota">
+    <span class="icon-download icon-white"></span>
+</a>
+<a href="{% url 'remote_delete' image_data.id %}" class="btn btn-small btn-danger" title="Eliminar imagen remota">
+    <span class="icon-remove icon-white"></span>
+</a>
+{% endblock %}
+
+{% block image_representation %}
+<img src="{{ image_data.url }}" alt="{{ image_data.title }}">
+<figcaption class="text-center">
+    {{image_data.title}}
+</figcaption>
+{% endblock %}

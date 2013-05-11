@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>
+            Práctica final de Programación Integrativa - {% block title %}{% endblock %}
+        </title>
+        {% block default_head %}
+        {% include 'images/partials/head.html' %}
+        {% endblock %}
+        {% block specific_head %}{% endblock %}
+    </head>
+    <body>
+        {% block nav_include %}
+        {% include 'images/partials/main_nav.html' %}
+        {% endblock %}
+        {% block body_content %}{% endblock %}
+    </body>
+</html>

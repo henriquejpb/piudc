@@ -1,0 +1,67 @@
+{% extends 'images/base_list.html' %}
+
+{% block title %}Lista de Imágenes Locales{% endblock %}
+
+{% block nav_include %}
+{% include 'images/partials/main_nav.html' with menu_local='active' menu_remote='' %}
+{% endblock %}
+
+{% block pre_content %}
+<div class="btn-toolbar">
+    <div class="btn-group">
+        <a href="{% url 'sync_all' %}" id="sync-all-button" class="btn with-tooltip" data-trigger="hover" data-title="<span class='icon-info-sign icon-white'></span> Esta acción enviará todas las imágenes de su repositorio local para el remoto y luego las eliminará del local." data-placement="bottom" data-container="body" data-html="true">
+            <span class="icon-upload"></span>
+            Sincronizar Todo
+        </a>
+    </div>
+            <span id="sycn-all-tooltip" class="">
+            </span>
+</div>
+{% endblock %}
+
+{% block action_buttons %}
+<a href="{% url 'upload' image_data.id %}" class="btn btn-small btn-success" title="Subir imagen">
+    <span class="icon-upload icon-white"></span>
+</a>
+<a href="{% url 'delete' image_data.id %}" class="btn btn-small btn-danger" title="Eliminar imagen">
+    <span class="icon-remove icon-white"></span>
+</a>
+{% endblock %}
+
+{% block image_representation %}
+<a href="{% url 'image_view' image_data.id %}">
+    <img src="{{ image_data.pathname.url }}" alt="{{ image_data.title }}">
+</a>
+<figcaption class="text-center">
+    {{image_data.title}}
+</figcaption>
+{% endblock %}
+
+{% block post_content %}
+{% if image_list.has_other_pages %}
+<div class="pagination pagination-centered">
+    <ul>
+        {% if image_list.has_previous %}
+        <li class=""><a href="{% url 'local_list' %}?page={{image_list.previous_page_number}}">&laquo;</a></li>
+        {% endif %}
+        {% for p in image_list.paginator.page_range %}
+        {% if p != image_list.number %}
+        <li class=""><a href="{% url 'local_list' %}?page={{p}}">{{p}}</a></li>
+        {% else %}
+        <li class="disabled active"><span>{{p}}</span></li>
+        {% endif %}
+        {% endfor %}
+        {% if image_list.has_next %}
+        <li class=""><a href="{% url 'local_list' %}?page={{image_list.next_page_number}}">&raquo;</a></li>
+        {% endif %}
+    </ul>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block empty_list %}
+            <p class="alert alert-warning">
+                <span class="icon icon-info-sign"></span>
+                Su repositorio local está vacío. Acceda al <a href="{% url 'remote_list' %}">repositorio remoto</a> para bajar imágenes.
+            </p>
+{% endblock %}

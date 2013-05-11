@@ -1,0 +1,45 @@
+form:last-child {
+    margin-bottom: 0;
+}
+
+form:last-child .form-actions {
+    margin-bottom: 0;
+}
+
+legend {
+    margin-bottom: 0;
+}
+
+.form-horizontal .control-group:last-child {
+    margin-bottom: 0;
+}
+
+.image-container {
+    position: relative;
+}
+
+.image-container .btn-toolbar {
+    position: absolute;
+    margin: 0;
+    top: 8px;
+    right: 8px;
+    opacity: 0;
+    transition: all 0.5s ease;
+}
+
+.image-container:hover .btn-toolbar {
+    opacity: 1;
+}
+
+.col3 :nth-child(3n+1) {
+    clear: both;
+}
+
+body > .container {
+    padding-bottom: 30px;
+}
+
+.thumbnails .thumbnail:hover {
+    border-color: #999;
+    box-shadow: 0 0 3px rgba(0,0,0,.3);
+}

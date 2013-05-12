@@ -1,11 +1,24 @@
 # Create your views here.
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import Context, RequestContext, loader
-from images.models import Image
-from images.remote.picasa import RemoteModel
 from django.core.urlresolvers import reverse
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from images.models import Image
+from images.remote.picasa import RemoteModel
+from images.filter.filtermodel import FilterModel
+from forms import ImageUploadForm
+
+def add_image(request):
+    if request.method == 'POST':
+        form = ImageUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+        else:
+            response = HttpResponse()
+            response.status_code = 400
+            return response
+    return HttpResponseRedirect(reverse('local_list'))
 
 def image_view(request, id):
     template = loader.get_template('images/image_view.html')
@@ -19,9 +32,15 @@ def image_view(request, id):
     return HttpResponse(template.render(context))
 
 def filter(request, id):
-    print request.GET.dict()
-    return HttpResponse(request.GET.dict())
-    # return HttpResponseRedirect(request.META['HTTP_REFERER'])
+    type = request.GET.get('filter_type')
+    param = request.GET.get('filter_param')
+    image = Image.objects.get(pk=id)
+
+    filter_model = FilterModel()
+    filter_model.openImage(image.pathname.url)
+    filter_model.callMethod(type, param)
+
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 def update(request, id):
     image = Image.objects.get(pk=id)
@@ -48,10 +67,8 @@ def local_list(request):
     except EmptyPage:
         images = paginator.page(paginator.num_pages)
 
-    print images.has_other_pages()
-    
     template = loader.get_template('images/local_list.html')
-    context = Context({
+    context = RequestContext(request, {
         'image_list' : images
     })
 

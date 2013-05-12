@@ -49,7 +49,9 @@ class RemoteModel:
         photo = ImageRemote(self.__photo_list[id])
         url = photo.url
 
-        filename = os.path.basename(urlparse.urlsplit(url).path)
+        orig_name, ext = os.path.splitext(os.path.basename(urlparse.urlsplit(url).path))
+        filename = os.path.basename(tempfile.mktemp(prefix='') + ext)
+        print filename
         filepath_relative = os.path.join(UPLOAD_DIR, filename)
         filepath = os.path.join(settings.MEDIA_ROOT, UPLOAD_DIR, filename)
         urllib.urlretrieve(photo.url, filepath)
@@ -61,7 +63,7 @@ class RemoteModel:
 
         absolute_path = os.path.join(settings.BASE_DIR, image.pathname.url[1:])
         album_url = "/data/feed/api/user/%s/albumid/%s" % ("default", self.__user_album.gphoto_id.text)
-        photo = self.__gd_client.InsertPhotoSimple(album_url, tempfile.mktemp(), 
+        photo = self.__gd_client.InsertPhotoSimple(album_url, tempfile.mktemp(prefix=''), 
                 image.title, absolute_path, content_type=self.__content_type)
         return photo
 

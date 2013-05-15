@@ -23,7 +23,7 @@
         var elems = $(this);
 
         var lineBasisEqualization = function() {
-            var maxHeight = 0;
+            var maxHeight = undefined;
             var lineObjects = [];
             var offsetTopFirst = elems.eq(0).offset().top;
             elems.each(function(i){
@@ -38,6 +38,7 @@
                     }
                     lineObjects.push(this);
                 }
+                // For the last row an just if there are more than one element in the row
                 if(i == elems.size() - 1 && maxHeight !== undefined) {
                     $(lineObjects).height(maxHeight);
                 }

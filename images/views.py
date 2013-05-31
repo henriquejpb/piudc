@@ -90,7 +90,7 @@ def download(request, id):
     image = Image()
     image.title = remote_file.title
     image.pathname = path
-    image.save()
+    image.save_remote()
     
     return HttpResponseRedirect(reverse('local_list'))
 

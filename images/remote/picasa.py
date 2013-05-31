@@ -51,7 +51,6 @@ class RemoteModel:
 
         orig_name, ext = os.path.splitext(os.path.basename(urlparse.urlsplit(url).path))
         filename = os.path.basename(tempfile.mktemp(prefix='') + ext)
-        print filename
         filepath_relative = os.path.join(UPLOAD_DIR, filename)
         filepath = os.path.join(settings.MEDIA_ROOT, UPLOAD_DIR, filename)
         urllib.urlretrieve(photo.url, filepath)
